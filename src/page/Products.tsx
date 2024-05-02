@@ -299,6 +299,9 @@ export default function ProductsTable() {
                               {category.name}
                             </SelectItem>
                           ))}
+                          {categoriesData.length === 0 && (
+                            <div className="text-center ">Kategoriyalar mavjud emas</div>
+                          )}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -372,7 +375,7 @@ export default function ProductsTable() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Ma'lumotlarni kamaytirish <ChevronDown className="ml-2 h-4 w-4" />
+              Ma'lumotlarni kamaytirish <ChevronDown className="w-4 h-4 ml-2" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -393,7 +396,7 @@ export default function ProductsTable() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className="border rounded-md">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -431,7 +434,7 @@ export default function ProductsTable() {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex items-center justify-end py-4 space-x-2">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredRowModel().rows.length} tadan{" "}
           {table.getState().pagination.pageIndex * table.getState().pagination.pageSize} dan{" "}
