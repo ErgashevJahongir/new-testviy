@@ -97,21 +97,25 @@ export default function CategoriesTable() {
   const columns: ColumnDef<Category>[] = [
     {
       accessorKey: "id",
+      meta: "Id",
       header: "Id",
       cell: ({ row }) => row.getValue("id"),
     },
     {
       accessorKey: "name",
+      meta: "Nomi",
       header: "Nomi",
       cell: ({ row }) => row.getValue("name"),
     },
     {
       accessorKey: "created_at",
+      meta: "Yaratilgan vaqti",
       header: "Yaratilgan vaqti",
       cell: ({ row }) => dayjs(row.getValue("created_at")).format("ss:mm:HH DD:MM:YYYY"),
     },
     {
       accessorKey: "action",
+      meta: "Amallar",
       header: "Amallar",
       cell: ({ row }) => {
         return (
@@ -277,7 +281,7 @@ export default function CategoriesTable() {
                     checked={column.getIsVisible()}
                     onCheckedChange={(value: boolean) => column.toggleVisibility(!!value)}
                   >
-                    {column?.columnDef?.header}
+                    {(column.columnDef.meta as string) || column.id}
                   </DropdownMenuCheckboxItem>
                 );
               })}
