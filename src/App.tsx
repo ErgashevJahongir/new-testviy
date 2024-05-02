@@ -1,9 +1,17 @@
+import { lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Layout from "@/components/layout";
-import ErrorPage from "@/ErrorPage";
-import ProductsTable from "@/page/Products";
-import CategoriesTable from "./page/Categories";
+
+const ErrorPage = lazy(() => {
+  return import("@/ErrorPage");
+});
+const ProductsTable = lazy(() => {
+  return import("@/page/Products");
+});
+const CategoriesTable = lazy(() => {
+  return import("@/page/Categories");
+});
 
 const router = createBrowserRouter([
   {
