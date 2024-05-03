@@ -82,11 +82,8 @@ export type Product = {
   created_at: Date;
 };
 
-let data: Product[] = JSON.parse(localStorage.getItem("testAppProducts") || "[]");
-
 function setData(newData: Product[]) {
   localStorage.setItem("testAppProducts", JSON.stringify(newData));
-  data = newData;
 }
 
 const productFormSchema = z.object({
@@ -104,6 +101,7 @@ const productFormSchema = z.object({
 
 export default function ProductsTable() {
   const [categoriesData] = useLocalStorage<Category[]>("testAppCategories", []);
+  const [data] = useLocalStorage<Product[]>("testAppProducts", []);
   const [editId, setEditId] = useState<string | null>(null);
   const [tableData, setTableData] = useState<Product[]>(data);
   const [open, setOpen] = useState(false);

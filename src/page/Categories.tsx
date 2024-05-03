@@ -62,6 +62,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export type Category = {
   id: string;
@@ -69,11 +70,8 @@ export type Category = {
   created_at: Date;
 };
 
-let data: Category[] = JSON.parse(localStorage.getItem("testAppCategories") || "[]");
-
 function setData(newData: Category[]) {
   localStorage.setItem("testAppCategories", JSON.stringify(newData));
-  data = newData;
 }
 
 const categoryFormSchema = z.object({
@@ -81,6 +79,7 @@ const categoryFormSchema = z.object({
 });
 
 export default function CategoriesTable() {
+  const [data] = useLocalStorage<Category[]>("testAppCategories", []);
   const [editId, setEditId] = useState<string | null>(null);
   const [tableData, setTableData] = useState<Category[]>(data);
   const [open, setOpen] = useState(false);
@@ -267,7 +266,7 @@ export default function CategoriesTable() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Ma'lumotlarni kamaytirish <ChevronDown className="ml-2 h-4 w-4" />
+              Ma'lumotlarni kamaytirish <ChevronDown className="w-4 h-4 ml-2" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -288,7 +287,7 @@ export default function CategoriesTable() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className="border rounded-md">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -326,7 +325,7 @@ export default function CategoriesTable() {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex items-center justify-end py-4 space-x-2">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredRowModel().rows.length} tadan{" "}
           {table.getState().pagination.pageIndex * table.getState().pagination.pageSize} dan{" "}
