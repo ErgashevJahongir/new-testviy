@@ -71,6 +71,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export type Product = {
   id: string;
@@ -82,8 +83,6 @@ export type Product = {
 };
 
 let data: Product[] = JSON.parse(localStorage.getItem("testAppProducts") || "[]");
-
-const categoriesData: Category[] = JSON.parse(localStorage.getItem("testAppCategories") || "[]");
 
 function setData(newData: Product[]) {
   localStorage.setItem("testAppProducts", JSON.stringify(newData));
@@ -104,6 +103,7 @@ const productFormSchema = z.object({
 });
 
 export default function ProductsTable() {
+  const [categoriesData] = useLocalStorage<Category[]>("testAppCategories", []);
   const [editId, setEditId] = useState<string | null>(null);
   const [tableData, setTableData] = useState<Product[]>(data);
   const [open, setOpen] = useState(false);
@@ -137,7 +137,7 @@ export default function ProductsTable() {
       meta: "Kategoriyasi",
       header: "Kategoriyasi",
       cell: ({ row }) =>
-        categoriesData.find((category) => category.id === row.getValue("category"))?.name,
+        categoriesData.find((category: Category) => category.id === row.getValue("category"))?.name,
     },
     {
       accessorKey: "price",
@@ -294,7 +294,7 @@ export default function ProductsTable() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {categoriesData?.map((category) => (
+                          {categoriesData?.map((category: Category) => (
                             <SelectItem key={category.id} value={category.id}>
                               {category.name}
                             </SelectItem>
